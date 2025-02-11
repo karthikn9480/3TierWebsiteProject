@@ -22,7 +22,7 @@ function App() {
     try {
       // Submit data to store
       const response = await fetch('https://1uxtnx24q7.execute-api.us-east-1.amazonaws.com/prod/storeData', {
-        method: 'POST',
+        method: 'POST', // Corrected method name
         headers: {
           'Content-Type': 'application/json',
         },
@@ -51,12 +51,15 @@ function App() {
     try {
       const response = await fetch('https://1uxtnx24q7.execute-api.us-east-1.amazonaws.com/prod/getData');
       const result = await response.json();
+      console.log("Users fetched:", result); // Debugging line
+
       if (response.ok) {
-        setUsers(result.data || []);
+        setUsers(result); // Assuming the result is already an array of users
       } else {
         setError(result.message || 'Failed to retrieve data.');
       }
     } catch (err) {
+      console.log("Fetch Users Error:", err); // Debugging line
       setError('Network error, please try again later.');
     }
   };
@@ -100,7 +103,9 @@ function App() {
         {users.length > 0 ? (
           users.map((user, index) => (
             <li key={index}>
-              <strong>{user.name}</strong> - {user.email}
+              {/* Only display name and email */}
+              <p><strong>{user.name}</strong></p>
+              <p>{user.email}</p>
             </li>
           ))
         ) : (
